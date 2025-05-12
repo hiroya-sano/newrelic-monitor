@@ -4,8 +4,11 @@
 
 source ./setup_env.sh
 terraform init
+
+# 外形監視・アラートの作成
 terraform plan -var-file tfvars/terraform.tfvars
 terraform apply -auto-approve -var-file tfvars/terraform.tfvars
 
+# 外形監視・アラートの削除
 terraform destroy -auto-approve -var-file tfvars/terraform.tfvars
 ```
