@@ -1,3 +1,8 @@
+private_locations = [
+  "test-sano",
+  "test-sano2"
+]
+
 monitors = [
   {
     name      = "example-monitor-1"
@@ -7,7 +12,7 @@ monitors = [
   {
     name      = "example-monitor-2"
     url       = "https://example2.com"
-    private_locations  = ["test-sano"]
+    private_locations  = ["test-sano2"]
   }
 ]
 

@@ -8,6 +8,11 @@ variable "newrelic_api_key" {
   type        = string
 }
 
+variable "private_locations" {
+  description = "List of synthetics private locations"
+  type = list(string)
+}
+
 variable "monitors" {
   description = "List of ping monitors"
   type = list(object({

@@ -1,5 +1,5 @@
 data "newrelic_synthetics_private_location" "private_locations" {
-  for_each = toset(flatten([for monitor in var.monitors : monitor.private_locations]))
+  for_each = toset(var.private_locations)
   name     = each.value
 }
 
