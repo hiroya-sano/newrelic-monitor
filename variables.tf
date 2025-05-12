@@ -13,7 +13,7 @@ variable "monitors" {
   type = list(object({
     name        = string
     url         = string
-    location    = list(string)
+    private_locations    = list(string)
   }))
 }
 

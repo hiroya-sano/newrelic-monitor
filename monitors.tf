@@ -1,3 +1,8 @@
+data "newrelic_synthetics_private_location" "private_locations" {
+  for_each = toset(flatten([for monitor in var.monitors : monitor.private_locations]))
+  name     = each.value
+}
+
 resource "newrelic_synthetics_monitor" "ping" {
   for_each = { for monitor in var.monitors : monitor.name => monitor }
 
@@ -6,7 +11,11 @@ resource "newrelic_synthetics_monitor" "ping" {
   name             = each.value.name
   uri              = each.value.url
   period           = "EVERY_MINUTE"
-  locations_public = each.value.location
+  locations_private =   [
+    for loc in each.value.private_locations :
+    data.newrelic_synthetics_private_location.private_locations[loc].id
+  ]
+
 
   treat_redirect_as_failure = true
   validation_string         = "success"

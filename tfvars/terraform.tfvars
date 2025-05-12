@@ -2,12 +2,12 @@ monitors = [
   {
     name      = "example-monitor-1"
     url       = "https://example1.com"
-    location  = ["AWS_AP_NORTHEAST_1"]
+    private_locations  = ["test-sano"]
   },
   {
     name      = "example-monitor-2"
     url       = "https://example2.com"
-    location  = ["AWS_AP_NORTHEAST_1"]
+    private_locations  = ["test-sano"]
   }
 ]
 
