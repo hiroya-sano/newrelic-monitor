@@ -5,12 +5,6 @@ terraform {
       version = "~> 3.60"
     }
   }
-  backend "azurerm" {
-    # with SAS token
-    storage_account_name = "mzpoc"                              
-    container_name       = "newrelic"                               
-    key                  = "newrelic.terraform.tfstate"                
-  }
 }
 
 provider "newrelic" {
