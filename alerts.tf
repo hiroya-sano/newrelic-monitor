@@ -1,32 +1,37 @@
-resource "newrelic_alert_policy" "policies" {
-  for_each = toset(var.policies)
-
-  name = each.value
+resource "newrelic_alert_policy" "cpurata_namespace" {
+  name = "CPU Usage Policy by Namespace"
 }
 
-resource "newrelic_nrql_alert_condition" "conditions" {
+resource "newrelic_nrql_alert_condition" "cpurata_namespace" {
   for_each = {
-    for condition in var.conditions :
-    "${condition.policy_name}-${condition.app_name}" => condition
+    for condition in var.conditions_cpurata_namespace :
+    "${condition.app_name}" => condition
   }
 
-  policy_id = newrelic_alert_policy.policies[each.value.policy_name].id
-  name      = "${each.value.app_name} Alert Condition"
+  policy_id = newrelic_alert_policy.cpurata_namespace.id
+  name      = "CPU Usage Rate (%) by Namespace_${each.value.app_name}"
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
-  violation_time_limit_seconds = each.value.violation_time_limit_seconds
+  violation_time_limit_seconds = each.value.alert_frequency - each.value.threshold_duration
 
   nrql {
-    query      = "SELECT count(*) FROM Transaction WHERE appName = '${each.value.app_name}'"
+    query      = "FROM K8sContainerSample SELECT average(cpuCoresUtilization) WHERE namespaceName = '${each.value.app_name}'"
+  }
+
+  critical {
+    operator              = "above"
+    threshold             = each.value.critical_threshold
+    threshold_duration    = each.value.threshold_duration
+    threshold_occurrences = "ALL"
   }
 
   dynamic "warning" {
-    for_each = each.value.warning_threshold > 0 ? [each.value] : []
+    for_each = try(each.value.warning_threshold, null) != null ? [1] : []
     content {
       operator              = "above"
       threshold             = each.value.warning_threshold
-      threshold_duration    = 300
+      threshold_duration    = each.value.threshold_duration
       threshold_occurrences = "ALL"
     }
   }

@@ -22,18 +22,13 @@ variable "monitors" {
   }))
 }
 
-variable "policies" {
-  description = "List of alert policies"
-  type = list(string)
-}
-
-variable "conditions" {
+variable "conditions_cpurata_namespace" {
   description = "List of alert conditions per policy"
   type = list(object({
-    policy_name = string
     app_name    = string
-    violation_time_limit_seconds = number
+    threshold_duration = number
+    alert_frequency = number
     critical_threshold = number
-    warning_threshold   = number
+    warning_threshold   = optional(number)
   }))
 }
