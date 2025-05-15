@@ -18,21 +18,21 @@ monitors = [
 
 conditions_cpurata_namespace = [
   {
-    app_name    = "App-1"
+    namespace_name    = "App-1"
     threshold_duration = 300
     alert_frequency = 600
     critical_threshold   = 80
     warning_threshold = 90
   },
   {
-    app_name    = "App-2"
+    namespace_name    = "App-2"
     threshold_duration = 300
     alert_frequency = 600
     critical_threshold   = 70
     warning_threshold = 80
   },
   {
-    app_name    = "App-3"
+    namespace_name    = "App-3"
     threshold_duration = 300
     alert_frequency = 600
     critical_threshold   = 80

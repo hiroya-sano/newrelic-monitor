@@ -25,7 +25,7 @@ variable "monitors" {
 variable "conditions_cpurata_namespace" {
   description = "List of alert conditions per policy"
   type = list(object({
-    app_name    = string
+    namespace_name    = string
     threshold_duration = number
     alert_frequency = number
     critical_threshold = number
