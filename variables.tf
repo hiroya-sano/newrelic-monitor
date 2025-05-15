@@ -22,13 +22,76 @@ variable "monitors" {
   }))
 }
 
-variable "conditions_cpurata_namespace" {
-  description = "List of alert conditions per policy"
+variable "conditions_cpurate_namespace" {
+  description = "List of alert conditions for cpurate by namespace"
   type = list(object({
     namespace_name    = string
     threshold_duration = number
     alert_frequency = number
     critical_threshold = number
     warning_threshold   = optional(number)
+  }))
+}
+
+variable "conditions_cpurate_pod" {
+  description = "List of alert conditions for cpurate by pod"
+  type = list(object({
+    namespace_name    = string
+    threshold_duration = number
+    alert_frequency = number
+    critical_threshold = number
+    warning_threshold   = optional(number)
+  }))
+}
+
+variable "conditions_memoryrate_namespace" {
+  description = "List of alert conditions for memoryrate by namespace"
+  type = list(object({
+    namespace_name    = string
+    threshold_duration = number
+    alert_frequency = number
+    critical_threshold = number
+    warning_threshold   = optional(number)
+  }))
+}
+
+variable "conditions_memoryrate_pod" {
+  description = "List of alert conditions for memoryrate by pod"
+  type = list(object({
+    namespace_name    = string
+    threshold_duration = number
+    alert_frequency = number
+    critical_threshold = number
+    warning_threshold   = optional(number)
+  }))
+}
+
+variable "conditions_status_pod" {
+  description = "List of alert conditions for memoryrate by pod"
+  type = list(object({
+    namespace_name    = string
+    threshold_duration = number
+    alert_frequency = number
+    critical_threshold = number
+  }))
+}
+
+variable "conditions_status_container" {
+  description = "List of alert conditions for memoryrate by pod"
+  type = list(object({
+    namespace_name    = string
+    threshold_duration = number
+    alert_frequency = number
+    critical_threshold = number
+  }))
+}
+
+variable "conditions_url" {
+  description = "List of alert conditions for memoryrate by pod"
+  type = list(object({
+    url    = string
+    threshold_duration = number
+    alert_frequency = number
+    critical_threshold = number
   }))
 }
