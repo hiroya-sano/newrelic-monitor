@@ -13,7 +13,7 @@ variable "private_locations" {
   type = list(string)
 }
 
-variable "monitors" {
+variable "synthetics" {
   description = "List of ping monitors"
   type = list(object({
     name        = string

@@ -3,7 +3,7 @@ private_locations = [
   "test-sano2"
 ]
 
-monitors = [
+synthetics = [
   {
     name      = "example-monitor-1"
     url       = "https://example1.com"

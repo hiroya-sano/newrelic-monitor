@@ -4,7 +4,7 @@ data "newrelic_synthetics_private_location" "private_locations" {
 }
 
 resource "newrelic_synthetics_monitor" "ping" {
-  for_each = { for monitor in var.monitors : monitor.name => monitor }
+  for_each = { for monitor in var.synthetics : monitor.name => monitor }
 
   status           = "ENABLED"
   type             = "SIMPLE"
