@@ -185,16 +185,6 @@ resource "newrelic_nrql_alert_condition" "status_pod" {
     threshold_duration    = each.value.threshold_duration
     threshold_occurrences = "ALL"
   }
-
-  dynamic "warning" {
-    for_each = try(each.value.warning_threshold, null) != null ? [1] : []
-    content {
-      operator              = "above"
-      threshold             = each.value.warning_threshold
-      threshold_duration    = each.value.threshold_duration
-      threshold_occurrences = "ALL"
-    }
-  }
 }
 
 
@@ -224,16 +214,6 @@ resource "newrelic_nrql_alert_condition" "status_container" {
     threshold             = each.value.critical_threshold
     threshold_duration    = each.value.threshold_duration
     threshold_occurrences = "ALL"
-  }
-
-  dynamic "warning" {
-    for_each = try(each.value.warning_threshold, null) != null ? [1] : []
-    content {
-      operator              = "above"
-      threshold             = each.value.warning_threshold
-      threshold_duration    = each.value.threshold_duration
-      threshold_occurrences = "ALL"
-    }
   }
 }
 
