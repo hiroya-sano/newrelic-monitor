@@ -1,8 +1,13 @@
+variable "harbor_env" {
+  description = "for harbor url"
+  type        = string
+}
+
 locals {
   harbor_query_filter = {
     cpu_and_memory = "clusterName LIKE 'g3cshrwc-shared-%' AND namespaceName LIKE 'app1986-harbor-%'"
     status = "namespace_name LIKE '%harbor%' or namespace_name LIKE '%jenkins%' or namespace_name LIKE '%vault%'"
-    url = "URL = 'https://harbor-dev.g3cshr.mazda.co.jp'"
+    url = "URL = 'https://harbor-${var.harbor_env}.g3cshr.mazda.co.jp'"
   }
   harbor_threshold = {
     cpu_and_memory = {
@@ -40,6 +45,7 @@ resource "newrelic_alert_policy" "cpurate_namespace_harbor" {
 resource "newrelic_nrql_alert_condition" "cpurate_namespace_harbor" {
   policy_id = newrelic_alert_policy.cpurate_namespace_harbor.id
   name      = "CPU Usage Rate (%) by Harbor Namespace"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -72,6 +78,7 @@ resource "newrelic_alert_policy" "cpurate_pod_harbor" {
 resource "newrelic_nrql_alert_condition" "cpurate_pod_harbor" {
   policy_id = newrelic_alert_policy.cpurate_pod_harbor.id
   name      = "CPU Usage Rate (%) by Harbor Pod"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -104,6 +111,7 @@ resource "newrelic_alert_policy" "memoryrate_namespace_harbor" {
 resource "newrelic_nrql_alert_condition" "memoryrate_namespace_harbor" {
   policy_id = newrelic_alert_policy.memoryrate_namespace_harbor.id
   name      = "Memory Usage Rate (%) by Harbor Namespace"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -136,6 +144,7 @@ resource "newrelic_alert_policy" "memoryrate_pod_harbor" {
 resource "newrelic_nrql_alert_condition" "memoryrate_pod_harbor" {
   policy_id = newrelic_alert_policy.memoryrate_pod_harbor.id
   name      = "Memory Usage Rate (%) by Harbor Pod"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -168,6 +177,7 @@ resource "newrelic_alert_policy" "status_pod_harbor" {
 resource "newrelic_nrql_alert_condition" "status_pod_harbor" {
   policy_id = newrelic_alert_policy.status_pod_harbor.id
   name      = "Not Running Status by Shared Cluster Pod"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -193,6 +203,7 @@ resource "newrelic_alert_policy" "status_container_harbor" {
 resource "newrelic_nrql_alert_condition" "status_container_harbor" {
   policy_id = newrelic_alert_policy.status_container_harbor.id
   name      = "Not Running Status by Shared Cluster Container"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -212,12 +223,13 @@ resource "newrelic_nrql_alert_condition" "status_container_harbor" {
 
 
 resource "newrelic_alert_policy" "url_harbor" {
-  name = "URL Monitoring harbor-dev"
+  name = "URL Monitoring harbor-${var.harbor_env}"
 }
 
 resource "newrelic_nrql_alert_condition" "url_harbor" {
   policy_id = newrelic_alert_policy.url_harbor.id
-  name      = "URL Monitor harbor-dev"
+  name      = "URL Monitor harbor-${var.harbor_env}"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
