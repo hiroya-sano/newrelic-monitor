@@ -10,6 +10,7 @@ resource "newrelic_nrql_alert_condition" "cpurate_namespace" {
 
   policy_id = newrelic_alert_policy.cpurate_namespace.id
   name      = "CPU Usage Rate (%) by Namespace_${each.value.namespace_name}"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -50,6 +51,7 @@ resource "newrelic_nrql_alert_condition" "cpurate_pod" {
 
   policy_id = newrelic_alert_policy.cpurate_pod.id
   name      = "CPU Usage Rate (%) by Pod_${each.value.namespace_name}"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -90,6 +92,7 @@ resource "newrelic_nrql_alert_condition" "memoryrate_namespace" {
 
   policy_id = newrelic_alert_policy.memoryrate_namespace.id
   name      = "Memory Usage Rate (%) by Namespace_${each.value.namespace_name}"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -130,6 +133,7 @@ resource "newrelic_nrql_alert_condition" "memoryrate_pod" {
 
   policy_id = newrelic_alert_policy.memoryrate_pod.id
   name      = "Memory Usage Rate (%) by Pod_${each.value.namespace_name}"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -170,6 +174,7 @@ resource "newrelic_nrql_alert_condition" "status_pod" {
 
   policy_id = newrelic_alert_policy.status_pod.id
   name      = "Not Running Status by Pod_${each.value.namespace_name}"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -200,6 +205,7 @@ resource "newrelic_nrql_alert_condition" "status_container" {
 
   policy_id = newrelic_alert_policy.status_container.id
   name      = "Not Running Status by Container_${each.value.namespace_name}"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -230,6 +236,7 @@ resource "newrelic_nrql_alert_condition" "url" {
 
   policy_id = newrelic_alert_policy.url.id
   name      = "URL Monitor Apache (${split("/", replace(each.value.url, "^[^:]+://", ""))[2]})"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"

@@ -16,6 +16,7 @@ resource "newrelic_alert_policy" "cpurate_infra" {
 resource "newrelic_nrql_alert_condition" "cpurate_infra" {
   policy_id = newrelic_alert_policy.cpurate_infra.id
   name      = "CPU Usage Rate (%) by TKG Cluster"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
@@ -48,6 +49,7 @@ resource "newrelic_alert_policy" "memoryrate_infra" {
 resource "newrelic_nrql_alert_condition" "memoryrate_infra" {
   policy_id = newrelic_alert_policy.memoryrate_infra.id
   name      = "Memory Usage Rate (%) by TKG Cluster"
+  enabled = local.alert_enabled
   aggregation_method = "event_flow"
   aggregation_window = "60"
   aggregation_delay = "60"
